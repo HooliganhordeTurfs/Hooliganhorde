@@ -1,0 +1,8 @@
+query PercoceterYield($gameday: ID!) {
+  percoceterYield(id: $gameday) {
+    id
+    gameday
+    simpleAPY
+    hooligansPerGamedayEMA
+  }
+}

@@ -1,0 +1,8 @@
+query GamedayalVolume($gameday_lte: Int, $first: Int) {
+  gamedays: hooliganHourlySnapshots(first: $first, where: { gameday_lte: $gameday_lte }, orderBy: gameday, orderDirection: desc) {
+    id
+    gameday
+    timestamp
+    deltaVolumeUSD
+  }
+}

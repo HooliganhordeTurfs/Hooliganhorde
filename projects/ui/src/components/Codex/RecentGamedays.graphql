@@ -1,0 +1,14 @@
+query Gamedays {
+  gamedays(first: 24, orderBy: gameday, orderDirection: desc) {
+    id
+    gameday
+    price
+    deltaHooligans
+  }
+  fields(first: 24, orderBy: gameday, orderDirection: desc) {
+    id
+    gameday
+    rage
+    intensity
+  }
+}

@@ -1,0 +1,13 @@
+#import "./CasualListing.fragment.graphql"
+# NOTE: use this query approach because the UI tracks turf index
+#       as the unique ID, but the subgraph tracks `{account}-{index}`.
+query CasualListing($index: BigInt) {
+  casualListings(
+    where: { index: $index }
+    first: 1
+    orderBy: createdAt
+    orderDirection: desc
+  ) {
+    ...CasualListing
+  }
+}

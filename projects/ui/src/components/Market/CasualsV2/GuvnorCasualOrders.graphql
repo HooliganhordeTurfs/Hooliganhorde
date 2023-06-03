@@ -1,0 +1,19 @@
+#import "../../CasualOrder.fragment.graphql"
+
+query GuvnorCasualOrders(
+  $first: Int = 100,
+  $createdAt_gt: BigInt,
+  $account: String!
+) {
+  casualOrders(
+    first: $first,
+    orderBy: createdAt,
+    orderDirection: desc
+    where: {
+     	guvnor: $account,
+      createdAt_gt: $createdAt_gt 
+    }
+  ) {
+    ...CasualOrder
+  }
+}

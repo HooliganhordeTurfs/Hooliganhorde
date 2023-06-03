@@ -1,0 +1,25 @@
+query HistoricalCasualOrders(
+  $historyIDs: [String!]!
+) {
+  casualOrders(where: {
+    historyID_in: $historyIDs
+  }, orderBy: updatedAt, orderDirection: desc) {
+    #// Identifiers
+    id
+    historyID
+
+    #// Pricing
+    pricePerCasual
+
+    #// Constraints
+    maxPlaceInLine
+
+    #// Amounts
+    casualAmount
+    casualAmountFilled
+    
+    #// Metadata
+    status
+    updatedAt
+  }
+}

@@ -1,0 +1,19 @@
+query GuvnorFirmAssetSnapshots(
+  $account: ID!
+) {
+  guvnor(id: $account) {
+    firm {
+      assets {
+        token
+        hourlySnapshots(orderBy: gameday, orderDirection: asc) {
+          id
+          gameday
+          deltaDepositedBDV # hourly Deposited BDV
+          deltaDepositedAmount #hourly Deposited Amount
+          depositedBDV # total Deposited BDV
+          createdAt
+        }
+      }
+    }
+  }
+}

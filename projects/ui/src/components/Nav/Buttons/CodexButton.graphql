@@ -1,0 +1,27 @@
+query CodexButton {
+  gamedays(
+    first: 24,
+    orderBy: gameday,
+    orderDirection: desc
+  ) {
+    id
+    gameday
+    price
+    deltaHooligans # total change in supply
+    rewardHooligans # amount from Reward on Actuation
+  }
+  fields: fieldHourlySnapshots(
+    first: 24,
+    where: { 
+      field: "0xc1e088fc1323b20bcbee9bd1b9fc9546db5624c5"
+    }
+    orderBy: gameday,
+    orderDirection: desc
+  ) {
+    id
+    gameday
+    issuedRage
+		intensity
+    casualRate
+  }
+}

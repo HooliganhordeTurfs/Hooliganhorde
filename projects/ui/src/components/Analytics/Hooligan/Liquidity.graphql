@@ -1,0 +1,13 @@
+query GamedayalLiquidity($gameday_lte: Int, $first: Int, $gameday_gt: Int) {
+  gamedays: hooliganHourlySnapshots(
+    first: $first
+    where: { gameday_lte: $gameday_lte, gameday_gte: $gameday_gt }
+    orderBy: gameday
+    orderDirection: desc
+  ) {
+    id
+    gameday
+    timestamp
+    liquidityUSD
+  }
+}

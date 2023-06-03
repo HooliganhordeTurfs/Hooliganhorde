@@ -1,0 +1,10 @@
+query DelegatorsHorde($ids: [ID!]) {
+  guvnors(
+    where: { id_in: $ids }
+  ) {
+    id
+    firm {
+      horde
+    }
+	}
+}

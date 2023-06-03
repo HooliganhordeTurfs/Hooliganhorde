@@ -1,0 +1,21 @@
+query GamedayalHorde(
+  $gameday_lte: Int, 
+  $gameday_gt: Int, 
+  $first: Int
+) {
+  gamedays: firmHourlySnapshots(
+    where: {
+      gameday_lte: $gameday_lte,
+      gameday_gt: $gameday_gt,
+      firm: "0xc1e088fc1323b20bcbee9bd1b9fc9546db5624c5"
+    }
+    first: $first
+    orderBy: gameday
+    orderDirection: desc
+  ) { 
+    id
+    gameday
+    createdAt
+    horde
+  }
+}

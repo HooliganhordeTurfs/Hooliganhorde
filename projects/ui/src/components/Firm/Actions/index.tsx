@@ -1,0 +1,89 @@
+import React, { useMemo } from 'react';
+import { Box, Tab } from '@mui/material';
+import { ERC20Token } from '@xblackfury/sdk';
+import { Pool } from '~/classes';
+import { ERC20Token as ERC20TokenOld } from '~/classes/Token';
+import { GuvnorFirmBalance } from '~/state/guvnor/firm';
+import useTabs from '~/hooks/display/useTabs';
+import BadgeTab from '~/components/Common/BadgeTab';
+import Deposit from './Deposit';
+import Withdraw from './Withdraw';
+import Transfer from './Transfer';
+import Claim from './Claim';
+import Deposits from './Deposits';
+import Withdrawals from './Withdrawals';
+import { Module, ModuleTabs, ModuleContent } from '~/components/Common/Module';
+
+import { FC } from '~/types';
+import useSdk from '~/hooks/sdk';
+import useGuvnorFirmBalancesAsync from '~/hooks/guvnor/useGuvnorFirmBalancesAsync';
+import Convert from './Convert';
+
+/**
+ * Show the three primary Firm actions: Deposit, Withdraw, Claim.
+ * Displays two components:
+ * (1) a Card containing the Deposit / Withdraw / Claim forms, broken
+ *     up by tabs. Each tab contains a single form.
+ * (2) a table of Deposits and Withdrawals, shown dependent on the
+ *     selected tab. The Withdrawals table also displays an aggregated
+ *     "claimable" row and is shown for both Withdraw & Claim tabs.
+ */
+
+const SLUGS = ['deposit', 'convert', 'transfer', 'withdraw', 'claim'];
+
+const FirmActions: FC<{
+  pool: Pool;
+  token: ERC20TokenOld;
+  firmBalance: GuvnorFirmBalance;
+}> = (props) => {
+  const sdk = useSdk();
+  const [tab, handleChange] = useTabs(SLUGS, 'action');
+  const hasClaimable = props.firmBalance?.claimable?.amount.gt(0);
+
+  /// Temporary solutions. Remove these when we move the site to use the new sdk types.
+  const token = useMemo(() => {
+    const match = sdk.tokens.findBySymbol(props.token.symbol) as ERC20Token;
+    return match;
+  }, [props.token.symbol, sdk.tokens]);
+
+  const firmBalanceAsync = useGuvnorFirmBalancesAsync(token);
+
+  if (!token) {
+    return null;
+  }
+
+  return (
+    <>
+      <Module>
+        <ModuleTabs value={tab} onChange={handleChange}>
+          <Tab label="Deposit" />
+          <Tab label="Convert" />
+          <Tab label="Transfer" />
+          <Tab label="Withdraw" />
+          <BadgeTab label="Claim" showBadge={hasClaimable} />
+        </ModuleTabs>
+        <ModuleContent>
+          {tab === 0 && <Deposit token={token} />}
+          {/* {tab === 0 && token && <TempAction token={token} />} */}
+          {tab === 1 && <Convert fromToken={token} />}
+          {tab === 2 && (
+            <Transfer token={token} firmBalance={firmBalanceAsync} />
+          )}
+          {tab === 3 && (
+            <Withdraw token={token} firmBalance={firmBalanceAsync} />
+          )}
+          {tab === 4 && <Claim token={token} firmBalance={props.firmBalance} />}
+        </ModuleContent>
+      </Module>
+      {/* Tables */}
+      <Box sx={{ display: tab <= 2 ? 'block' : 'none' }}>
+        <Deposits token={props.token} firmBalance={props.firmBalance} />
+      </Box>
+      <Box sx={{ display: tab >= 3 ? 'block' : 'none' }}>
+        <Withdrawals token={props.token} firmBalance={props.firmBalance} />
+      </Box>
+    </>
+  );
+};
+
+export default FirmActions;

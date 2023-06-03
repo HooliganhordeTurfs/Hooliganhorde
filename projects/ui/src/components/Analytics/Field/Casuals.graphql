@@ -1,0 +1,16 @@
+query GamedayalCasuals($gameday_lte: Int, $first: Int) {
+  gamedays: fieldHourlySnapshots(
+    where: {
+        field: "0xc1e088fc1323b20bcbee9bd1b9fc9546db5624c5",
+        gameday_lte: $gameday_lte
+    }
+    first: $first
+    orderBy: gameday
+    orderDirection: desc
+  ) {
+    id
+    gameday
+    createdAt
+    undraftableCasuals
+  }
+}

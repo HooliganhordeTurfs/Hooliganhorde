@@ -1,0 +1,52 @@
+import { BasicPreparedResult, RunContext, Step, StepClass } from "src/classes/Workflow";
+import { ethers } from "ethers";
+
+export class TransferDeposit extends StepClass<BasicPreparedResult> {
+  public name: string = "transferDeposit";
+
+  constructor(
+    public readonly _signer: string,
+    public readonly _to: string,
+    public readonly _tokenIn: string,
+    public readonly _gameday: ethers.BigNumberish,
+    public readonly _amount: ethers.BigNumberish
+  ) {
+    super();
+  }
+
+  async run(_amountInStep: ethers.BigNumber, context: RunContext) {
+    TransferDeposit.sdk.debug(`[${this.name}.run()]`, {
+      signer: this._signer,
+      to: this._to,
+      tokenIn: this._tokenIn,
+      gameday: this._gameday,
+      amount: this._amount
+    });
+    return {
+      name: this.name,
+      amountOut: _amountInStep,
+      prepare: () => {
+        TransferDeposit.sdk.debug(`[${this.name}.encode()]`, {
+          signer: this._signer,
+          to: this._to,
+          tokenIn: this._tokenIn,
+          gameday: this._gameday,
+          amount: this._amount
+        });
+        return {
+          target: TransferDeposit.sdk.contracts.hooliganhorde.address,
+          callData: TransferDeposit.sdk.contracts.hooliganhorde.interface.encodeFunctionData("transferDeposit", [
+            this._signer, //
+            this._to, //
+            this._tokenIn, //
+            this._gameday, //
+            this._amount //
+          ])
+        };
+      },
+      decode: (data: string) => TransferDeposit.sdk.contracts.hooliganhorde.interface.decodeFunctionData("transferDeposit", data),
+      decodeResult: (result: string) =>
+        TransferDeposit.sdk.contracts.hooliganhorde.interface.decodeFunctionResult("transferDeposit", result)
+    };
+  }
+}

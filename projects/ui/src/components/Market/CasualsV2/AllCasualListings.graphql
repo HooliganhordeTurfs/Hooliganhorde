@@ -1,0 +1,19 @@
+#import "./CasualListing.fragment.graphql"
+query AllCasualListings(
+  $first: Int = 1000,
+  $status: MarketStatus = ACTIVE,
+  $maxDraftableIndex: BigInt!
+) {
+  casualListings(
+    first: $first,
+  	where: {
+      status: $status,
+      maxDraftableIndex_gt: $maxDraftableIndex,
+      remainingAmount_gt: "100000",  # = 0.10 Casuals. hides dust casuals.
+    },
+    orderBy: index,     # index of the listed turf
+    orderDirection: asc # start from earliest listings
+  ) {
+    ...CasualListing
+  }
+}

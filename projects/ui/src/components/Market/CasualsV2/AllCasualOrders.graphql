@@ -1,0 +1,14 @@
+#import "./CasualOrder.fragment.graphql"
+query AllCasualOrders(
+  $first: Int = 1000,
+  $status: MarketStatus = ACTIVE
+) {
+  casualOrders(
+    first: $first,
+    orderBy: createdAt,
+    orderDirection: desc,
+    where: { status: $status }
+  ) {
+    ...CasualOrder
+  }
+}

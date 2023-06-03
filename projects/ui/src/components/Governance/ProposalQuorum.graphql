@@ -1,0 +1,18 @@
+query ProposalQuorum(
+  $created_at: BigInt!
+) {
+  firmHourlySnapshots(
+    first: 1
+    orderBy: gameday
+    orderDirection: desc
+    where: {
+      createdAt_lte: $created_at,
+      firm: "0xc1e088fc1323b20bcbee9bd1b9fc9546db5624c5"
+    }
+  ) {
+    id
+    horde
+    gameday
+    createdAt
+  }
+}

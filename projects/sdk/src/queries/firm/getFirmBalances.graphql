@@ -1,0 +1,31 @@
+query getFirmBalances($account: ID!, $gameday: Int!) {
+  guvnor(id: $account) {
+    # Deposited
+    deposited: deposits(
+      orderBy: gameday
+      orderDirection: asc
+      where: {
+        #amount_gt: 0
+        amount_gt: 0
+      }
+    ) {
+      gameday
+      token
+      #amount
+      amount
+      bdv
+    }
+    # Withdrawn
+    withdrawn: withdraws(orderBy: withdrawGameday, orderDirection: asc, where: { claimableGameday_gt: $gameday, claimed: false }) {
+      gameday: withdrawGameday
+      token
+      amount
+    }
+    # Claimable
+    claimable: withdraws(orderBy: withdrawGameday, orderDirection: asc, where: { claimableGameday_lte: $gameday, claimed: false }) {
+      gameday: withdrawGameday
+      token
+      amount
+    }
+  }
+}

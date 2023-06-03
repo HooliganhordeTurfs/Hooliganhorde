@@ -1,0 +1,18 @@
+query GuvnorFirmRewards(
+  $account: String
+) {
+  snapshots: firmHourlySnapshots(
+    where: { firm: $account },
+    orderBy: gameday,
+    orderDirection: asc,
+    first: 1000
+  ) {
+    id
+    gameday
+    createdAt
+    horde 					# = totalHorde(previous firmHourlySnapshot) + hourlyHordeDelta
+    prospects					# ...
+    deltaDepositedBDV		# ...
+    depositedBDV	# ...
+  }
+}

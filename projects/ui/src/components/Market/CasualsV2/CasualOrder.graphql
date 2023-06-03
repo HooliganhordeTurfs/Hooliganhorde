@@ -1,0 +1,6 @@
+#import "./CasualOrder.fragment.graphql"
+query CasualOrder($id: ID!) {
+  casualOrder(id: $id) {
+    ...CasualOrder
+  }
+}

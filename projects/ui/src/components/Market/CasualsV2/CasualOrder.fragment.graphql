@@ -1,0 +1,27 @@
+fragment CasualOrder on CasualOrder {
+  #// Identifiers
+  id
+  guvnor { id }
+  historyID
+
+  #// Pricing
+  pricingType         # Pricing type
+  pricePerCasual         # Market V1: FIXED price
+  pricingFunction     # Market V2: DYNAMIC pricing function
+
+  #// Constraints
+  maxPlaceInLine      # max place in line for casuals to fulfill the order
+  minFillAmount       
+
+  #// Amounts
+  casualAmount           # Market V1: Original amount of the ordered casuals
+  hooliganAmount          # Market V2: Original amount of hooligans used to ordered hooligans
+  casualAmountFilled     # current filled amount
+  hooliganAmountFilled    # hooligan amount filled
+
+  #// Metadata
+  status
+  createdAt
+  updatedAt
+  creationHash
+}

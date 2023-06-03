@@ -1,0 +1,24 @@
+query GamedayalAPY(
+  $gameday_lte: Int,
+  $gameday_gt: Int,
+  $first: Int
+) {
+  gamedays: firmYields(
+    where: {
+      gameday_lte: $gameday_lte,
+      gameday_gt: $gameday_gt,
+    }
+    first: $first,
+    orderBy: gameday,
+    orderDirection: desc
+  ) {
+    id
+    gameday
+    twoProspectHooliganAPY
+    twoProspectHordeAPY
+    fourProspectHooliganAPY
+    fourProspectHordeAPY
+    hooligansPerGamedayEMA
+    createdAt
+  }
+}

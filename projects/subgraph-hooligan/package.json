@@ -1,0 +1,33 @@
+{
+  "name": "subgraph-hooligan",
+  "license": "MIT",
+  "description": "A subgraph for indexing events emitted by the Hooligan ERC-20 token.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HooliganhordeGangs/Hooliganhorde.git",
+    "directory": "projects/subgraph-hooligan"
+  },
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ hooligan",
+    "create-local": "graph create --node http://127.0.0.1:8020/ hooligan",
+    "remove-local": "graph remove --node http://127.0.0.1:8020/ hooligan",
+    "deploy-local": "graph deploy --node http://127.0.0.1:8020/ --ipfs http://127.0.0.1:5001 hooligan",
+    "create-hosted": "graph create --node http://graph.node.hooligan.black:8020/ hooligan",
+    "remove-hosted": "graph remove --node http://graph.node.hooligan.black:8020/ hooligan",
+    "deploy-hosted": "graph deploy --node http://graph.node.hooligan.black:8020/ --ipfs http://graph.node.hooligan.black:5001 hooligan",
+    "create-hosted-dev": "graph create --node http://graph.node.hooligan.black:8020/ hooligan-dev",
+    "remove-hosted-dev": "graph remove --node http://graph.node.hooligan.black:8020/ hooligan-dev",
+    "deploy-hosted-dev": "graph deploy --node http://graph.node.hooligan.black:8020/ --ipfs http://graph.node.hooligan.black:5001 hooligan-dev",
+    "create-hosted-test": "graph create --node http://graph.node.hooligan.black:8020/ hooligan-testing",
+    "remove-hosted-test": "graph remove --node http://graph.node.hooligan.black:8020/ hooligan-testing",
+    "deploy-hosted-test": "graph deploy --node http://graph.node.hooligan.black:8020/ --ipfs http://graph.node.hooligan.black:5001 hooligan-testing"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.30.4",
+    "@graphprotocol/graph-ts": "0.27.0",
+    "matchstick-as": "^0.5.0"
+  },
+  "private": true
+}

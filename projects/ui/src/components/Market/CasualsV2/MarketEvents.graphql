@@ -1,0 +1,75 @@
+query MarketEvents(
+  $events_first: Int = 1000,
+  $events_timestamp_lt: BigInt!
+) {
+  marketEvents: marketplaceEvents(
+    orderBy: createdAt,
+    orderDirection: desc,
+    first: $events_first,
+    where: { 
+      createdAt_lt: $events_timestamp_lt
+    }
+  ) {
+    hash
+    createdAt
+    # --------
+    # LISTINGS
+    # --------
+    ... on CasualListingCancelled {
+      id
+      index # of the Listing that was cancelled
+      account
+      historyID
+      # => amount
+      # => pricePerCasual
+    }
+    ... on CasualListingCreated {
+      id
+      index
+      amount
+      maxDraftableIndex
+      pricePerCasual
+      historyID
+    }
+    ... on CasualListingFilled {
+      id
+      from
+      to
+      amount
+      index # of Listing that sold
+      start
+      historyID
+      # => pricePerCasual
+    }
+    # ------
+    # ORDERS
+    # ------
+    ... on CasualOrderCancelled {
+      id
+      orderId
+      account
+      historyID
+      # => amount
+      # => maxPlaceInLine
+      # => pricePerCasual
+    }
+    ... on CasualOrderCreated {
+      id
+      amount
+      maxPlaceInLine
+      pricePerCasual
+      historyID
+    }
+    ... on CasualOrderFilled {
+      id
+      from
+      to
+      historyID
+      amount
+      index # index of turf was sold to the Order
+      start #
+      # => maxPlaceInLine
+      # => pricePerCasual
+    }
+  }
+}

@@ -1,0 +1,18 @@
+#import "../../CasualListing.fragment.graphql"
+
+query GuvnorCasualListings(
+  $first: Int = 100,
+  $createdAt_gt: BigInt,
+  $account: String!
+) {
+  casualListings(
+    first: $first,
+    where: { 
+      createdAt_gt: $createdAt_gt,
+      guvnor: $account,
+      status_not: FILLED_PARTIAL
+    },
+  ) {
+    ...CasualListing
+  }
+}

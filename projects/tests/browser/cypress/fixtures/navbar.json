@@ -1,0 +1,50 @@
+{
+  "fields": [
+    {
+      "title": "Forecast",
+      "slug": ""
+    },
+    {
+      "title": "Firm",
+      "slug": "firm"
+    },
+    {
+      "title": "Field",
+      "slug": "field"
+    },
+    {
+      "title": "Barrack",
+      "slug": "barrack"
+    },
+    {
+      "title": "Balances",
+      "slug": "balances"
+    },
+    {
+      "title": "Market",
+      "slug": "market"
+    }
+  ],
+  "menu": [
+    {
+      "title": "HooligaNFTs",
+      "slug": "nft"
+    },
+    {
+      "title": "Swap",
+      "slug": "swap"
+    },
+    {
+      "title": "Analytics",
+      "slug": "analytics"
+    },
+    {
+      "title": "Governance",
+      "slug": "governance"
+    },
+    {
+      "title": "Docs",
+      "slug": ""
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+query PercoceterBalances($account: String) {
+  percoceterBalances(where: { guvnor: $account }) {
+    amount
+    percoceterToken {
+      id
+      endBpf
+      gameday
+      culture
+      startBpf
+    }
+  }
+}

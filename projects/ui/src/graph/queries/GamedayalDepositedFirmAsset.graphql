@@ -1,0 +1,22 @@
+query GamedayalDepositedFirmAsset(
+  $gameday_lte: Int,
+  $gameday_gt: Int,
+  $first: Int,
+  $firmAsset: String!
+) {
+  gamedays: firmAssetHourlySnapshots(
+    where: {
+      gameday_lte: $gameday_lte,
+      gameday_gt:  $gameday_gt,
+      firmAsset: $firmAsset
+    }
+    first: $first
+    orderBy: gameday
+    orderDirection: desc
+  ) { 
+    id
+    gameday
+    createdAt
+    depositedAmount
+  }
+}
